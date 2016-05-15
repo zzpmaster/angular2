@@ -9,24 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var book_1 = require('./book');
-var LoopComponent = (function () {
-    function LoopComponent() {
+var book_1 = require('../book');
+var mock_books_1 = require('../mock-books');
+var BooksService = (function () {
+    function BooksService() {
     }
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', book_1.Book)
-    ], LoopComponent.prototype, "loopBook", void 0);
-    LoopComponent = __decorate([
-        core_1.Component({
-            selector: 'loop-book',
-            template: "<div *ngIf=\"loopBook\"><div [ngClass]=\"{fontColor: true}\">\n                Today's special offer book: {{loopBook.name}}, price: {{loopBook.price}}\n             </div></div>",
-            inputs: ['loopBook'],
-            styles: ["\n        .fontColor {\n            color: red;\n            padding-bottom: 10px;\n        }\n  "]
-        }), 
+    BooksService.prototype.getBooks = function () {
+        return Promise.resolve(mock_books_1.BOOKS);
+    };
+    BooksService.prototype.setBook = function (name, price) {
+        var book = new book_1.Book();
+        book.name = name;
+        book.price = price;
+        mock_books_1.BOOKS.push(book);
+    };
+    BooksService = __decorate([
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], LoopComponent);
-    return LoopComponent;
+    ], BooksService);
+    return BooksService;
 }());
-exports.LoopComponent = LoopComponent;
-//# sourceMappingURL=loop.component.js.map
+exports.BooksService = BooksService;
+//# sourceMappingURL=book.service.js.map

@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
+
 import { BookComponent } from './book.component';
-import {LoopComponent} from './loop.component';
+import { LoopComponent } from './loop.component';
+import { BooksService } from './services/book.service';
+import { Book } from './book';
 
 import { NgFor } from '@angular/common';
 
@@ -11,35 +15,39 @@ import { NgFor } from '@angular/common';
              <div style="padding-bottom: 10px">
                 <label for="bookName">Book Name:</label>
                 <input name="bookName" #newName/>
-                <label for="bookValue">Book Value:</label>
-                <input name="bookValue" #newValue/>
-                <button (click)="addBook(newName, newValue)">Add Book</button>
+                <label for="bookPrice">Book Price:</label>
+                <input name="bookPrice" #newPrice/>
+                <button (click)="addBook(newName, newPrice)">Add Book</button>
              </div>
-             <book *ngFor="let b of books" [nameValue]="b"></book>`,
-  directives: [LoopComponent, BookComponent, NgFor]
+             <book *ngFor="let b of books" [oneBook]="b"></book> <br/>
+             <h1>DaLian's Weather</h1>`,
+  directives: [LoopComponent, BookComponent, NgFor],
+  providers: [BooksService]
 
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   name: String;
-  books: Array<any>;
+  // books: Array<any>;
+  books: Book[];
 
   index: number;
   loop: {};
 
-  constructor() {
-    this.name = 'Mark Zhang';
-    this.books = [{
-      name: 'AngularJS',
-      value: '100.0'
-    }, {
-      name: 'Swift',
-      value: '120.0'
-    }];
+  constructor(private booksService: BooksService) {
     this.index = 0;
-    this.loop = this.books[this.index];
+  }
+
+  ngOnInit() {
+    this.name = 'Mark Zhang';
+    // this.booksService.getBooks().then(books => this.books = books);
 
     var self = this;
+    this.booksService.getBooks().then(function (books) {
+      self.books = books;
+      self.loop = self.books[self.index];
+    });
+
     setInterval(function() {
       if (self.books.length !== 0) {
         if (self.index === self.books.length) {
@@ -49,23 +57,19 @@ export class AppComponent {
         self.index++;
       }
     }, 4000);
-
   }
 
-  addBook(bookName: HTMLInputElement, bookValue: HTMLInputElement): void {
+  addBook(bookName: HTMLInputElement, bookPrice: HTMLInputElement): void {
 
-    if (bookName.value === '' || bookValue.value === '') {
-      alert('请输入bookName or bookValue');
+    if (bookName.value === '' || bookPrice.value === '') {
+      alert('Please input bookName or bookPrice');
       return;
     }
 
-    this.books.push({
-      name: bookName.value,
-      value: bookValue.value
-    });
+    this.booksService.setBook(bookName.value, parseInt(bookPrice.value, 10));
 
     bookName.value = '';
-    bookValue.value = '';
+    bookPrice.value = '';
 
   }
 

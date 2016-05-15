@@ -15,8 +15,8 @@ var BookComponent = (function () {
     BookComponent = __decorate([
         core_1.Component({
             selector: 'book',
-            template: "<div [ngClass]=\"{bordered: true}\">\n                    <span>{{nameValue.name}}: </span>\n                    <span>{{nameValue.value}}</span>\n               </div>",
-            inputs: ['nameValue'],
+            template: "<div [ngClass]=\"{bordered: true}\">\n                    <span>{{oneBook.name}}: </span>\n                    <span>{{oneBook.price}}</span>\n               </div>",
+            inputs: ['oneBook'],
             styles: ["\n        .bordered {\n            border: 1px dashed black;\n            padding: 5px 5px 5px 5px;\n        }\n  "]
         }), 
         __metadata('design:paramtypes', [])

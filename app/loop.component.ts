@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { Book } from './book';
+
 
 @Component({
   selector: 'loop-book',
-  template: `<div [ngClass]="{fontColor: true}">Today's special offer book: {{loopBook.name}}, price: {{loopBook.value}}</div>`,
+  template: `<div *ngIf="loopBook"><div [ngClass]="{fontColor: true}">
+                Today's special offer book: {{loopBook.name}}, price: {{loopBook.price}}
+             </div></div>`,
   inputs: ['loopBook'],
   styles: [`
         .fontColor {
@@ -13,7 +18,7 @@ import { Component } from '@angular/core';
 })
 
 export class LoopComponent {
-  loopBook: {};
+  @Input() loopBook: Book;
   constructor() {
 
   }

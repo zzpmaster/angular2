@@ -11,20 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var book_component_1 = require('./book.component');
 var loop_component_1 = require('./loop.component');
+var book_service_1 = require('./services/book.service');
 var common_1 = require('@angular/common');
 var AppComponent = (function () {
-    function AppComponent() {
-        this.name = 'Mark Zhang';
-        this.books = [{
-                name: 'AngularJS',
-                value: '100.0'
-            }, {
-                name: 'Swift',
-                value: '120.0'
-            }];
+    function AppComponent(booksService) {
+        this.booksService = booksService;
         this.index = 0;
-        this.loop = this.books[this.index];
+    }
+    AppComponent.prototype.ngOnInit = function () {
+        this.name = 'Mark Zhang';
+        // this.booksService.getBooks().then(books => this.books = books);
         var self = this;
+        this.booksService.getBooks().then(function (books) {
+            self.books = books;
+            self.loop = self.books[self.index];
+        });
         setInterval(function () {
             if (self.books.length !== 0) {
                 if (self.index === self.books.length) {
@@ -34,26 +35,24 @@ var AppComponent = (function () {
                 self.index++;
             }
         }, 4000);
-    }
-    AppComponent.prototype.addBook = function (bookName, bookValue) {
-        if (bookName.value === '' || bookValue.value === '') {
-            alert('请输入bookName or bookValue');
+    };
+    AppComponent.prototype.addBook = function (bookName, bookPrice) {
+        if (bookName.value === '' || bookPrice.value === '') {
+            alert('Please input bookName or bookPrice');
             return;
         }
-        this.books.push({
-            name: bookName.value,
-            value: bookValue.value
-        });
+        this.booksService.setBook(bookName.value, parseInt(bookPrice.value, 10));
         bookName.value = '';
-        bookValue.value = '';
+        bookPrice.value = '';
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "<h1>My First Angular 2 App, Welcome to {{name}}'s Shop</h1>\n             <loop-book [loopBook]=\"loop\"></loop-book>\n             <div style=\"padding-bottom: 10px\">\n                <label for=\"bookName\">Book Name:</label>\n                <input name=\"bookName\" #newName/>\n                <label for=\"bookValue\">Book Value:</label>\n                <input name=\"bookValue\" #newValue/>\n                <button (click)=\"addBook(newName, newValue)\">Add Book</button>\n             </div>\n             <book *ngFor=\"let b of books\" [nameValue]=\"b\"></book>",
-            directives: [loop_component_1.LoopComponent, book_component_1.BookComponent, common_1.NgFor]
+            template: "<h1>My First Angular 2 App, Welcome to {{name}}'s Shop</h1>\n             <loop-book [loopBook]=\"loop\"></loop-book>\n             <div style=\"padding-bottom: 10px\">\n                <label for=\"bookName\">Book Name:</label>\n                <input name=\"bookName\" #newName/>\n                <label for=\"bookPrice\">Book Price:</label>\n                <input name=\"bookPrice\" #newPrice/>\n                <button (click)=\"addBook(newName, newPrice)\">Add Book</button>\n             </div>\n             <book *ngFor=\"let b of books\" [oneBook]=\"b\"></book> <br/>\n             <h1>DaLian's Weather</h1>",
+            directives: [loop_component_1.LoopComponent, book_component_1.BookComponent, common_1.NgFor],
+            providers: [book_service_1.BooksService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [book_service_1.BooksService])
     ], AppComponent);
     return AppComponent;
 }());
