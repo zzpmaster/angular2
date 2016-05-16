@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var book_component_1 = require('./book.component');
 var loop_component_1 = require('./loop.component');
 var book_service_1 = require('./services/book.service');
+var weather_service_1 = require('./services/weather.service');
 var common_1 = require('@angular/common');
 var AppComponent = (function () {
     function AppComponent(booksService) {
@@ -48,9 +49,9 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "<h1>My First Angular 2 App, Welcome to {{name}}'s Shop</h1>\n             <loop-book [loopBook]=\"loop\"></loop-book>\n             <div style=\"padding-bottom: 10px\">\n                <label for=\"bookName\">Book Name:</label>\n                <input name=\"bookName\" #newName/>\n                <label for=\"bookPrice\">Book Price:</label>\n                <input name=\"bookPrice\" #newPrice/>\n                <button (click)=\"addBook(newName, newPrice)\">Add Book</button>\n             </div>\n             <book *ngFor=\"let b of books\" [oneBook]=\"b\"></book> <br/>\n             <h1>DaLian's Weather</h1>",
+            templateUrl: 'app/templates/homeLayout.html',
             directives: [loop_component_1.LoopComponent, book_component_1.BookComponent, common_1.NgFor],
-            providers: [book_service_1.BooksService]
+            providers: [book_service_1.BooksService, weather_service_1.WeatherService]
         }), 
         __metadata('design:paramtypes', [book_service_1.BooksService])
     ], AppComponent);

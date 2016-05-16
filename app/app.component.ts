@@ -3,26 +3,20 @@ import { OnInit } from '@angular/core';
 
 import { BookComponent } from './book.component';
 import { LoopComponent } from './loop.component';
+
 import { BooksService } from './services/book.service';
+import { WeatherService} from './services/weather.service';
+
 import { Book } from './book';
+import { Weather } from './modal/weather';
 
 import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'my-app',
-  template: `<h1>My First Angular 2 App, Welcome to {{name}}\'s Shop</h1>
-             <loop-book [loopBook]="loop"></loop-book>
-             <div style="padding-bottom: 10px">
-                <label for="bookName">Book Name:</label>
-                <input name="bookName" #newName/>
-                <label for="bookPrice">Book Price:</label>
-                <input name="bookPrice" #newPrice/>
-                <button (click)="addBook(newName, newPrice)">Add Book</button>
-             </div>
-             <book *ngFor="let b of books" [oneBook]="b"></book> <br/>
-             <h1>DaLian's Weather</h1>`,
+  templateUrl: 'app/templates/homeLayout.html',
   directives: [LoopComponent, BookComponent, NgFor],
-  providers: [BooksService]
+  providers: [BooksService, WeatherService]
 
 })
 

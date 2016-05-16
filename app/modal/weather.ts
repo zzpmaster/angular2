@@ -1,4 +1,8 @@
 export class Weather {
-    name: string;
-    price: number;
+    city: string;
+    aqi: string;
+    wendu: string;
+    ganmao: string;
+    yesterday: any;
+    forecast: [any];
 }
