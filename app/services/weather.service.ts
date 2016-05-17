@@ -8,15 +8,27 @@ import { Weather } from "../modal/weather";
 @Injectable()
 export class WeatherService {
 
-    private weatherURL: string = 'http://wthrcdn.etouch.cn/weather_mini?citykey=101010100';
+    private weatherURL: string = 'http://wthrcdn.etouch.cn/weather_mini?city=';
+    //private weatherURL: string = 'http://wthrcdn.etouch.cn/weather_mini?citykey=101010100';
 
     constructor(private http: Http) {
 
     }
 
-    getWeather(): Observable<Weather> {
-        return this.http.get(this.weatherURL)
-                        .map(this.extractData)
+    getWeather(city: string): Observable<Weather> {
+
+        var searchCity = city === "" ? "北京" : city;
+
+        return this.http.get(this.weatherURL + searchCity)
+                         //.map(this.extractData)
+                        .map(function (res: Response) {
+                            let body = res.json();
+                            if (body.desc !== "OK") {
+                                return Observable.throw("status is error");
+                            } else {
+                                return body.data;
+                            }
+                        })
                         .catch(this.handleError);
     }
 

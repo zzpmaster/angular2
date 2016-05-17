@@ -14,13 +14,23 @@ var Observable_1 = require("rxjs/Observable");
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/catch');
 var WeatherService = (function () {
+    //private weatherURL: string = 'http://wthrcdn.etouch.cn/weather_mini?citykey=101010100';
     function WeatherService(http) {
         this.http = http;
-        this.weatherURL = 'http://wthrcdn.etouch.cn/weather_mini?citykey=101010100';
+        this.weatherURL = 'http://wthrcdn.etouch.cn/weather_mini?city=';
     }
-    WeatherService.prototype.getWeather = function () {
-        return this.http.get(this.weatherURL)
-            .map(this.extractData)
+    WeatherService.prototype.getWeather = function (city) {
+        var searchCity = city === "" ? "北京" : city;
+        return this.http.get(this.weatherURL + searchCity)
+            .map(function (res) {
+            var body = res.json();
+            if (body.desc !== "OK") {
+                return Observable_1.Observable.throw("status is error");
+            }
+            else {
+                return body.data;
+            }
+        })
             .catch(this.handleError);
     };
     WeatherService.prototype.extractData = function (res) {

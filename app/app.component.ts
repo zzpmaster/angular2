@@ -5,18 +5,14 @@ import { BookComponent } from './book.component';
 import { LoopComponent } from './loop.component';
 
 import { BooksService } from './services/book.service';
-import { WeatherService} from './services/weather.service';
-
 import { Book } from './book';
-import { Weather } from './modal/weather';
-
 import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'my-app',
   templateUrl: 'app/templates/homeLayout.html',
   directives: [LoopComponent, BookComponent, NgFor],
-  providers: [BooksService, WeatherService]
+  providers: [BooksService]
 
 })
 
@@ -51,6 +47,7 @@ export class AppComponent implements OnInit {
         self.index++;
       }
     }, 4000);
+
   }
 
   addBook(bookName: HTMLInputElement, bookPrice: HTMLInputElement): void {

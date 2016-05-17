@@ -1,0 +1,15 @@
+<h1>Weather</h1>
+<div>
+    <input placeholder="城市" #city /> <button (click)="search(city.value);">查询</button>
+</div>
+<div *ngIf="query_error">没有查到相应城市数据!</div>
+<div *ngIf="weather">
+    <span style="font-size: 20px;">{{weather.city}}</span>
+    <span>{{weather.wendu}}℃</span>
+    <div>空气质量: {{weather.aqi}}</div>
+    <ul>
+        <li *ngFor="let fc of weather.forecast">
+            {{fc.date}} {{fc.low}}~{{fc.high}}, 天气:{{fc.type}}.
+        </li>
+    </ul>
+</div>

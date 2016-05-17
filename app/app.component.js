@@ -12,7 +12,6 @@ var core_1 = require('@angular/core');
 var book_component_1 = require('./book.component');
 var loop_component_1 = require('./loop.component');
 var book_service_1 = require('./services/book.service');
-var weather_service_1 = require('./services/weather.service');
 var common_1 = require('@angular/common');
 var AppComponent = (function () {
     function AppComponent(booksService) {
@@ -51,7 +50,7 @@ var AppComponent = (function () {
             selector: 'my-app',
             templateUrl: 'app/templates/homeLayout.html',
             directives: [loop_component_1.LoopComponent, book_component_1.BookComponent, common_1.NgFor],
-            providers: [book_service_1.BooksService, weather_service_1.WeatherService]
+            providers: [book_service_1.BooksService]
         }), 
         __metadata('design:paramtypes', [book_service_1.BooksService])
     ], AppComponent);
